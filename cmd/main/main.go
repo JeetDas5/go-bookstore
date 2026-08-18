@@ -6,9 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/jeetdas5/go-bookstore/pkg/config"
 	"github.com/jeetdas5/go-bookstore/pkg/routes"
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
