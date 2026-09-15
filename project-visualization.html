@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Interactive architecture and API reference for the Go Book Management System.">
+    <title>Book Management System | Project Map</title>
+    <style>
+      :root {
+        --ink: #122033;
+        --muted: #667085;
+        --paper: #f7f9fc;
+        --panel: #ffffff;
+        --line: #d8e0ea;
+        --blue: #1261a6;
+        --blue-soft: #e8f3fd;
+        --green: #12715b;
+        --green-soft: #e6f6f1;
+        --violet: #6646bd;
+        --violet-soft: #f1edff;
+        --orange: #a34d08;
+        --orange-soft: #fff1e5;
+        --shadow: 0 12px 30px rgba(22, 43, 72, .08);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.5;
+      }
+
+      .shell { max-width: 1180px; margin: 0 auto; padding: 24px 24px 64px; }
+
+      .site-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 12px 0 28px;
+      }
+
+      .brand { display: inline-flex; align-items: center; gap: 11px; color: var(--ink); text-decoration: none; font-weight: 800; letter-spacing: -.02em; }
+      .brand-mark {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border-radius: 10px;
+        color: #fff;
+        background: linear-gradient(135deg, #0d4f8a, #2484c9);
+        box-shadow: 0 6px 14px rgba(18, 97, 166, .24);
+        font-family: Georgia, serif;
+        font-size: 1.2rem;
+      }
+
+      .header-actions { display: flex; align-items: center; gap: 10px; }
+      .header-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 9px 13px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        color: var(--ink);
+        background: var(--panel);
+        font-size: .86rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+      }
+
+      .header-link:hover, .header-link:focus-visible { border-color: var(--blue); box-shadow: 0 6px 18px rgba(22, 43, 72, .1); transform: translateY(-1px); outline: none; }
+      .header-link-primary { border-color: var(--blue); color: #fff; background: var(--blue); }
+      .header-link-primary:hover, .header-link-primary:focus-visible { color: #fff; background: #0d4f8a; }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding: clamp(30px, 6vw, 56px);
+        border: 1px solid #d5e5f5;
+        border-radius: 24px;
+        background: linear-gradient(120deg, #ffffff 0%, #f6fbff 58%, #eaf5ff 100%);
+      }
+
+      .hero::after {
+        position: absolute;
+        top: -88px;
+        right: -70px;
+        width: 240px;
+        height: 240px;
+        border: 42px solid rgba(18, 97, 166, .08);
+        border-radius: 50%;
+        content: "";
+      }
+
+      .hero-copy { position: relative; z-index: 1; }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+        color: var(--blue);
+        font-size: .8rem;
+        font-weight: 800;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); content: ""; }
+
+      h1 { margin: 0; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.05; letter-spacing: -.045em; }
+      h2 { margin: 0; font-size: 1.2rem; letter-spacing: -.02em; }
+      p { margin: 0; }
+
+      .intro { max-width: 680px; margin-top: 16px; color: var(--muted); font-size: 1.05rem; }
+
+      .summary {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin: 32px 0;
+      }
+
+      .stat {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+      }
+
+      .stat strong { display: block; color: var(--blue); font-size: 1.8rem; letter-spacing: -.04em; }
+      .stat span { color: var(--muted); font-size: .9rem; }
+
+      .section-title { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin: 32px 0 14px; }
+      .section-title p { color: var(--muted); font-size: .9rem; }
+
+      .architecture {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        align-items: stretch;
+      }
+
+      .layer {
+        position: relative;
+        min-height: 190px;
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+      }
+
+      .layer:not(:last-child)::after {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        right: -17px;
+        width: 18px;
+        height: 18px;
+        border-top: 2px solid var(--line);
+        border-right: 2px solid var(--line);
+        transform: translateY(-50%) rotate(45deg);
+        content: "";
+      }
+
+      .layer-code { color: var(--blue); }
+      .layer-router { color: var(--violet); }
+      .layer-controller { color: var(--orange); }
+      .layer-data { color: var(--green); }
+      .layer-name { margin: 10px 0 6px; font-size: 1.08rem; font-weight: 800; }
+      .layer-path { display: inline-block; padding: 3px 7px; border-radius: 6px; background: var(--blue-soft); color: var(--blue); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .75rem; }
+      .layer-router .layer-path { background: var(--violet-soft); color: var(--violet); }
+      .layer-controller .layer-path { background: var(--orange-soft); color: var(--orange); }
+      .layer-data .layer-path { background: var(--green-soft); color: var(--green); }
+      .layer p { margin-top: 10px; color: var(--muted); font-size: .87rem; }
+
+      .content-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(270px, .65fr); gap: 24px; align-items: start; }
+
+      .endpoint-list { display: grid; gap: 9px; }
+      .endpoint {
+        display: grid;
+        grid-template-columns: 65px minmax(120px, 1fr) 1.4fr;
+        gap: 12px;
+        align-items: center;
+        width: 100%;
+        padding: 13px 14px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        color: inherit;
+        background: var(--panel);
+        box-shadow: 0 3px 10px rgba(22, 43, 72, .04);
+        cursor: pointer;
+        text-align: left;
+        transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+      }
+
+      .endpoint:hover, .endpoint:focus-visible { border-color: var(--blue); transform: translateY(-1px); box-shadow: var(--shadow); outline: none; }
+      .endpoint.is-selected { border-color: var(--blue); background: var(--blue-soft); }
+      .method { width: fit-content; min-width: 56px; padding: 3px 6px; border-radius: 5px; font-size: .72rem; font-weight: 900; text-align: center; }
+      .post { color: var(--green); background: var(--green-soft); }
+      .get { color: var(--blue); background: var(--blue-soft); }
+      .put { color: var(--orange); background: var(--orange-soft); }
+      .delete { color: #a02945; background: #fdecef; }
+      .route { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9rem; font-weight: 700; }
+      .action { color: var(--muted); font-size: .86rem; }
+
+      .flow-card {
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+      }
+
+      .flow-card h2 { margin-bottom: 7px; }
+      .flow-card > p { color: var(--muted); font-size: .9rem; }
+      .flow { display: grid; gap: 8px; margin-top: 20px; }
+      .flow-step { padding: 10px 12px; border-left: 3px solid var(--blue); background: #f8fbff; font-size: .86rem; }
+      .flow-step:nth-child(2) { border-color: var(--violet); }
+      .flow-step:nth-child(3) { border-color: var(--orange); }
+      .flow-step:nth-child(4) { border-color: var(--green); }
+      .flow-step strong { display: block; font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; }
+      .flow-step span { color: var(--muted); }
+      .flow-arrow { justify-self: center; color: var(--muted); font-size: 1.1rem; line-height: 1; }
+      .response { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: .84rem; }
+      .response code { color: var(--green); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 700; }
+
+      .project-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 38px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: .82rem;
+      }
+
+      .project-footer a { color: var(--blue); font-weight: 800; text-decoration: none; }
+      .project-footer a:hover, .project-footer a:focus-visible { text-decoration: underline; }
+
+      @media (max-width: 860px) {
+        .architecture { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .layer:nth-child(2)::after { display: none; }
+      }
+
+      @media (max-width: 650px) {
+        .shell { padding: 32px 16px 48px; }
+        .site-header, .project-footer { align-items: flex-start; flex-direction: column; }
+        .header-actions { width: 100%; }
+        .header-link { flex: 1; justify-content: center; }
+        .summary, .architecture, .content-grid { grid-template-columns: 1fr; }
+        .layer { min-height: auto; }
+        .layer:not(:last-child)::after { top: auto; right: auto; bottom: -16px; left: 50%; transform: translateX(-50%) rotate(135deg); }
+        .endpoint { grid-template-columns: 60px 1fr; }
+        .action { grid-column: 2; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="site-header">
+        <a class="brand" href="https://github.com/JeetDas5/go-bookstore" target="_blank" rel="noreferrer" aria-label="Open the Go Bookstore GitHub repository">
+          <span class="brand-mark" aria-hidden="true">B</span>
+          <span>Go Bookstore</span>
+        </a>
+        <nav class="header-actions" aria-label="Project links">
+          <a class="header-link" href="https://github.com/JeetDas5/go-bookstore" target="_blank" rel="noreferrer">Documentation <span aria-hidden="true">↗</span></a>
+          <a class="header-link header-link-primary" href="https://github.com/JeetDas5/go-bookstore" target="_blank" rel="noreferrer">View repository <span aria-hidden="true">↗</span></a>
+        </nav>
+      </header>
+
+      <section class="hero" aria-labelledby="project-title">
+        <div class="hero-copy">
+          <div class="eyebrow">Go REST service</div>
+          <h1 id="project-title">Book Management System</h1>
+          <p class="intro">A layered API for creating, reading, updating, and deleting books. Select an endpoint below to trace the request through the actual codebase.</p>
+        </div>
+      </section>
+
+      <section class="summary" aria-label="Project summary">
+        <div class="stat"><strong>5</strong><span>REST endpoints</span></div>
+        <div class="stat"><strong>4</strong><span>Application layers</span></div>
+        <div class="stat"><strong>:8080</strong><span>HTTP server port</span></div>
+      </section>
+
+      <section aria-labelledby="architecture-heading">
+        <div class="section-title">
+          <h2 id="architecture-heading">How a request moves through the service</h2>
+          <p>Left to right</p>
+        </div>
+        <div class="architecture">
+          <article class="layer layer-code">
+            <span class="layer-path">cmd/main/main.go</span>
+            <div class="layer-name">HTTP server</div>
+            <p>Starts the service on port 8080 and attaches the Gorilla Mux router.</p>
+          </article>
+          <article class="layer layer-router">
+            <span class="layer-path">pkg/routes/bookstore-route.go</span>
+            <div class="layer-name">Router</div>
+            <p>Matches a method and URL to its book controller function.</p>
+          </article>
+          <article class="layer layer-controller">
+            <span class="layer-path">pkg/controllers/book-controller.go</span>
+            <div class="layer-name">Controller</div>
+            <p>Parses input, calls the model, and serializes the JSON response.</p>
+          </article>
+          <article class="layer layer-data">
+            <span class="layer-path">pkg/models/book.go</span>
+            <div class="layer-name">Data layer</div>
+            <p>Uses GORM to persist <strong>Book</strong> records in the MySQL <strong>bookstore</strong> database.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-grid" aria-labelledby="endpoints-heading">
+        <div>
+          <div class="section-title">
+            <h2 id="endpoints-heading">API surface</h2>
+            <p>Click an endpoint to inspect its flow</p>
+          </div>
+          <div class="endpoint-list" role="list">
+            <button class="endpoint is-selected" type="button" data-method="POST" data-route="/book" data-controller="CreateBook" data-model="Book.CreateBook()" data-detail="Parses the request JSON, creates a Book record, and returns the saved book." role="listitem">
+              <span class="method post">POST</span><span class="route">/book</span><span class="action">Create a book</span>
+            </button>
+            <button class="endpoint" type="button" data-method="GET" data-route="/book" data-controller="GetBook" data-model="GetAllBooks()" data-detail="Fetches every Book record and returns the collection as JSON." role="listitem">
+              <span class="method get">GET</span><span class="route">/book</span><span class="action">List all books</span>
+            </button>
+            <button class="endpoint" type="button" data-method="GET" data-route="/book/{bookId}" data-controller="GetBookById" data-model="GetBookById(id)" data-detail="Reads the path ID, looks up one Book record, and returns it as JSON." role="listitem">
+              <span class="method get">GET</span><span class="route">/book/{bookId}</span><span class="action">Retrieve one book</span>
+            </button>
+            <button class="endpoint" type="button" data-method="PUT" data-route="/book/{bookId}" data-controller="UpdateBook" data-model="db.Save(&amp;book)" data-detail="Parses fields from the request body, updates the matching book, and saves it." role="listitem">
+              <span class="method put">PUT</span><span class="route">/book/{bookId}</span><span class="action">Update a book</span>
+            </button>
+            <button class="endpoint" type="button" data-method="DELETE" data-route="/book/{bookId}" data-controller="DeleteBook" data-model="DeleteBook(id)" data-detail="Reads the path ID, deletes the matching Book record, and returns the deleted value." role="listitem">
+              <span class="method delete">DELETE</span><span class="route">/book/{bookId}</span><span class="action">Delete a book</span>
+            </button>
+          </div>
+        </div>
+
+        <aside class="flow-card" aria-live="polite" aria-labelledby="flow-heading">
+          <h2 id="flow-heading">Selected request</h2>
+          <p id="flow-description">Follow the request from route registration to the MySQL database.</p>
+          <div class="flow">
+            <div class="flow-step"><strong>1 · Router</strong><span id="flow-route">POST /book</span></div>
+            <div class="flow-arrow" aria-hidden="true">↓</div>
+            <div class="flow-step"><strong>2 · Controller</strong><span id="flow-controller">CreateBook</span></div>
+            <div class="flow-arrow" aria-hidden="true">↓</div>
+            <div class="flow-step"><strong>3 · Model / GORM</strong><span id="flow-model">Book.CreateBook()</span></div>
+            <div class="flow-arrow" aria-hidden="true">↓</div>
+            <div class="flow-step"><strong>4 · Database</strong><span>MySQL · bookstore</span></div>
+          </div>
+          <div class="response">Response: <code>JSON body</code> · HTTP 200</div>
+        </aside>
+      </section>
+
+      <footer class="project-footer">
+        <span>Source map: cmd/main · pkg/routes · pkg/controllers · pkg/models · pkg/config · pkg/utils</span>
+        <span>Built by <a href="https://github.com/JeetDas5" target="_blank" rel="noreferrer">Jeet Das</a></span>
+      </footer>
+    </main>
+
+    <script>
+      const endpoints = document.querySelectorAll('.endpoint');
+      const flowRoute = document.getElementById('flow-route');
+      const flowController = document.getElementById('flow-controller');
+      const flowModel = document.getElementById('flow-model');
+      const flowDescription = document.getElementById('flow-description');
+
+      endpoints.forEach((endpoint) => {
+        endpoint.addEventListener('click', () => {
+          endpoints.forEach((item) => item.classList.remove('is-selected'));
+          endpoint.classList.add('is-selected');
+          flowRoute.textContent = `${endpoint.dataset.method} ${endpoint.dataset.route}`;
+          flowController.textContent = endpoint.dataset.controller;
+          flowModel.textContent = endpoint.dataset.model;
+          flowDescription.textContent = endpoint.dataset.detail;
+        });
+      });
+    </script>
+  </body>
+</html>
