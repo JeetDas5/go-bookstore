@@ -1,4 +1,4 @@
-# Book Management System
+# Book Management System by Go
 
 A Go REST API for managing a catalogue of books. The service exposes CRUD endpoints for book records and persists data in MySQL through GORM.
 
